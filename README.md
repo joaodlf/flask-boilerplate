@@ -1,6 +1,6 @@
 # flask-boilerplate
 
-A boilerplate project for Flask+CLI applications.
+A boilerplate project for Flask+CLI applications. More information [here](https://joaodlf.com/python-for-the-web.html).
 
 You must create a `config.py` file at the root of the project (an example file is provided in `config_example.py`)
 
