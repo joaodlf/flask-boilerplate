@@ -2,8 +2,8 @@ import atexit
 import logging
 import os
 
-import arrow
 import logzero
+import pendulum
 import sentry_sdk
 from logzero import logger
 from sentry_sdk import capture_message
@@ -61,7 +61,7 @@ class Cli:
             cron_db_entry = CliModel.create(name=self.name)
 
         cron_db_entry.pid = self.pid
-        cron_db_entry.dt_start = arrow.now().datetime
+        cron_db_entry.dt_start = pendulum.now()
         cron_db_entry.dt_finish = None
 
         self.cron_db_entry = cron_db_entry
@@ -71,6 +71,6 @@ class Cli:
         logger.info(f"--- Logging to {self.logs_dir}/{self.name}.log ---")
 
     def finish(self):
-        self.cron_db_entry.dt_finish = arrow.now().datetime
+        self.cron_db_entry.dt_finish = pendulum.now()
         self.cron_db_entry.save()
         logger.info("--- FINISHING ---")

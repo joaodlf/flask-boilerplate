@@ -1,4 +1,5 @@
 import peewee
+import pendulum
 from peewee import *
 
 from models import InetField, ModelBase
@@ -6,7 +7,7 @@ from models import InetField, ModelBase
 
 class ApiIpWhitelist(ModelBase):
     comment = CharField(null=True)
-    dt_created = DateTimeField()
+    dt_created = DateTimeField(default=pendulum.now())
     ip_address = InetField()
 
     class Meta:
