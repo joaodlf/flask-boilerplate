@@ -3,7 +3,6 @@ from flask import Flask, render_template
 
 import config
 from web import flask_config, middleware, views
-from web.sentry import sentry
 
 
 def create_app():
@@ -33,7 +32,13 @@ def register_middleware(app):
 
 def register_error_handlers(app):
     if config.SENTRY_DSN:
-        sentry.init_app(app)
+        import sentry_sdk
+        from sentry_sdk.integrations.flask import FlaskIntegration
+
+        sentry_sdk.init(
+            dsn=config.SENTRY_DSN,
+            integrations=[FlaskIntegration()]
+        )
 
     # HTTP error templates.
     def render_error(error):

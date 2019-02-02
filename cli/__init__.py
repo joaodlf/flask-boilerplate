@@ -4,8 +4,9 @@ import os
 
 import arrow
 import logzero
+import sentry_sdk
 from logzero import logger
-from raven import Client
+from sentry_sdk import capture_message
 
 from config import SENTRY_DSN
 from models.cli import Cli as CliModel
@@ -21,7 +22,7 @@ class Cli:
         self.logs_dir = "cli/logs"
 
         if SENTRY_DSN:
-            self.sentry_client = Client(SENTRY_DSN)
+            sentry_sdk.init(SENTRY_DSN)
 
     def start(self, name):
         """CLI initializer, this must always be run at the very start of execution."""
@@ -49,8 +50,7 @@ class Cli:
                 error = f"Process #{cron_db_entry.pid} ({cron_db_entry.name}) is still running!"
 
                 if SENTRY_DSN:
-                    self.sentry_capture_mesage(f"Process #{cron_db_entry.pid} ({cron_db_entry.name}) is still running!",
-                                               level="error")
+                    capture_message(f"Process #{cron_db_entry.pid} ({cron_db_entry.name}) is still running!", level="error")
                 else:
                     logger.error(error)
 
@@ -74,17 +74,3 @@ class Cli:
         self.cron_db_entry.dt_finish = arrow.now().datetime
         self.cron_db_entry.save()
         logger.info("--- FINISHING ---")
-
-    def sentry_capture_mesage(self, message, level=None):
-        """Sends a message to Sentry (as well as logging the message with the specified log level)."""
-        if not level:
-            level = "info"
-
-        if self.sentry_client:
-            self.sentry_client.captureMessage(message)
-        else:
-            logger.warn("Sentry is not available!")
-            if level == "info":
-                logger.info(message)
-            if level == "error":
-                logger.error(message)
