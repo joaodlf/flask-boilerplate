@@ -2,12 +2,12 @@
 from flask import Flask, render_template
 
 import config
-from web import flask_config, middleware, views
 
 
-def create_app():
+def create_app(config_name):
+    from web.flask_config import flask_config
     app = Flask(__name__, static_folder="static")
-    app.config.from_object(flask_config.load())
+    app.config.from_object(flask_config[config_name])
 
     register_error_handlers(app)
     register_blueprints(app)
@@ -17,20 +17,24 @@ def create_app():
 
 
 def register_blueprints(app):
-    app.register_blueprint(views.public.blueprint)
-    app.register_blueprint(views.api.blueprint)
+    from web.views import blueprints
+    app.register_blueprint(blueprints.public_blueprint)
+    app.register_blueprint(blueprints.api_blueprint)
 
     return None
 
 
 def register_middleware(app):
-    middleware.log.register(app)
-    middleware.db.register(app)
+    from web import middleware
+
+    if not app.config["TESTING"]:
+        middleware.db.register(app)
 
     return None
 
 
 def register_error_handlers(app):
+    # Sentry.
     if config.SENTRY_DSN:
         import sentry_sdk
         from sentry_sdk.integrations.flask import FlaskIntegration

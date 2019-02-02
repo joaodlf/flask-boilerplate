@@ -24,10 +24,10 @@ class TestingConfig(Config):
     TESTING = True
 
 
-def load():
-    conf = DevelopmentConfig()
+flask_config = {
+    "development": DevelopmentConfig,
+    "testing": TestingConfig,
+    "production": ProductionConfig,
 
-    if config.ENVIRONMENT == "production":
-        conf = ProductionConfig()
-
-    return conf
+    "default": DevelopmentConfig
+}
