@@ -1,16 +1,16 @@
 import peewee
 from peewee import *
 
-from models import BaseModel
+from models import InetField, ModelBase
 
 
-class ApiIpWhitelist(BaseModel):
+class ApiIpWhitelist(ModelBase):
     comment = CharField(null=True)
     dt_created = DateTimeField()
-    ip_address = CharField()  # inet field, peewee does not support this type!
+    ip_address = InetField()
 
     class Meta:
-        db_table = "api_ip_whitelist"
+        table_name = "api_ip_whitelist"
 
     @staticmethod
     def is_valid_ip(ip_address: str):
@@ -21,8 +21,8 @@ class ApiIpWhitelist(BaseModel):
         except ApiIpWhitelist.DoesNotExist:
             valid = False
 
+        # Check ip range.
         if not valid:
-            # Check ip range.
             try:
                 valid = ApiIpWhitelist.raw(
                     "SELECT * FROM api_ip_whitelist WHERE ip_address >> %s::inet;", ip_address

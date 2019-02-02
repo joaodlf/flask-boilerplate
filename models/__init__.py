@@ -1,6 +1,6 @@
-from peewee import Model, PostgresqlDatabase
+from peewee import Field, Model, PostgresqlDatabase
 
-from config import SQL_HOST, SQL_USER, SQL_PASSWORD, SQL_DATABASE, SQL_PORT
+from config import SQL_DATABASE, SQL_HOST, SQL_PASSWORD, SQL_PORT, SQL_USER
 
 database = PostgresqlDatabase(SQL_DATABASE,
                               user=SQL_USER,
@@ -9,6 +9,10 @@ database = PostgresqlDatabase(SQL_DATABASE,
                               port=SQL_PORT)
 
 
-class BaseModel(Model):
+class ModelBase(Model):
     class Meta:
         database = database
+
+
+class InetField(Field):
+    field_type = "inet"

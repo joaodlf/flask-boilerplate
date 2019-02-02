@@ -6,6 +6,7 @@ import config
 
 def create_app(config_name):
     from web.flask_config import flask_config
+
     app = Flask(__name__, static_folder="static")
     app.config.from_object(flask_config[config_name])
 
@@ -18,6 +19,7 @@ def create_app(config_name):
 
 def register_blueprints(app):
     from web.views import blueprints
+
     app.register_blueprint(blueprints.public_blueprint)
     app.register_blueprint(blueprints.api_blueprint)
 
@@ -52,4 +54,5 @@ def register_error_handlers(app):
 
     for errcode in [401, 404, 500]:
         app.errorhandler(errcode)(render_error)
+
     return None

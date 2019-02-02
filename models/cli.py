@@ -1,10 +1,10 @@
 from peewee import *
 
-from models import BaseModel
+from models import ModelBase
 
 
-class Cli(BaseModel):
-    id = PrimaryKeyField()
+class Cli(ModelBase):
+    id = AutoField()
     dt_created = DateTimeField()
     dt_finish = DateTimeField(null=True)
     dt_start = DateTimeField(null=True)
@@ -12,4 +12,4 @@ class Cli(BaseModel):
     pid = IntegerField()
 
     class Meta:
-        db_table = "cli"
+        table_name = "cli"
