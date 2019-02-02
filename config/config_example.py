@@ -1,5 +1,3 @@
-ENVIRONMENT = "dev"
-
 FLASK_SECRET_KEY = "test"
 
 SENTRY_DSN = ""

@@ -1,6 +1,6 @@
 import sys
 
 if "pytest" in sys.modules:
-    from config.config_example import *
+    from config.test_config import *
 else:
     from config.config import *
