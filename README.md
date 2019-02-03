@@ -2,7 +2,7 @@
 
 A boilerplate project for Flask+CLI applications. More information [here](https://joaodlf.com/python-for-the-web.html).
 
-You must create a `config.py` file at the root of the project (an example file is provided in `config_example.py`)
+You must create a `config.py` file in the `config` dir of the project (an example file is provided)
 
 ## Development
 
@@ -13,7 +13,6 @@ You'll need a new virtualenv:
 ```
 $ python3 -m venv env
 $ . env/bin/activate
-
 ```
 
 Install requirements via pip:
@@ -45,15 +44,38 @@ You should now be able to navigate to http://127.0.0.1:80/
 A CLI example can be run via:
 
 ```
-$ python cli/example.py example
+$ python cli/example.py
 ```
 
 ## Database
 
-Postgres is the supported RDBM.
+Postgres 10 is the supported RDBM.
 
-To import the database, run:
+### Migrations
+[Flyway](https://flywaydb.org/) is required for db migrations. Migration files are located in
+the `migrations` dir.
+
+If you are on macos, flyway can be installed via brew:
+```
+$ brew install flyway
+```
+
+If setting up a new database, create a `flyway.conf` file at the root
+of the project:
 
 ```
-$ psql <project_name> < dev/schema.sql
+flyway.url=jdbc:postgresql://<hostname>:<port>/<database>
+flyway.user=<user>
+flyway.password=<password>
+flyway.locations=filesystem:./
+```
+
+You should now be ready to run `flyway baseline` and `flyway migrate`.
+
+## Tests
+
+Basic tests are supplied in the `tests` dir, which can be run via pytest:
+
+```
+$ pytest -vs -p no:warnings
 ```
