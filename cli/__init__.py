@@ -13,27 +13,23 @@ from models.cli import Cli as CliModel
 
 
 class Cli:
-    """ The class every CLI job should inherit from. """
+    """The class every CLI job should inherit from.
+        It creates/updates a cron entry in the database; manages the log file; ensures there aren't duplicate processes running."""
 
-    def __init__(self):
+    def __init__(self, name):
         self.pid = os.getpid()
-        self.name = None
+        self.name = name
         self.cron_db_entry = None
         self.logs_dir = "cli/logs"
-
         if SENTRY_DSN:
             sentry_sdk.init(SENTRY_DSN)
-
-    def start(self, name):
-        """CLI initializer, this must always be run at the very start of execution."""
-        self.name = name
 
         # Set the logger.
         logzero.loglevel(logging.INFO)
         logzero.logfile(f"{self.logs_dir}/{self.name}.log", maxBytes=1000000, backupCount=3)
 
         # Execute finish() at the end of CLI execution.
-        atexit.register(self.finish)
+        atexit.register(self._finish)
 
         try:
             # Check if the cron entry exists.
@@ -70,7 +66,8 @@ class Cli:
         logger.info("--- STARTING ---")
         logger.info(f"--- Logging to {self.logs_dir}/{self.name}.log ---")
 
-    def finish(self):
+    def _finish(self):
+        """Called at the end of execution."""
         self.cron_db_entry.dt_finish = pendulum.now()
         self.cron_db_entry.save()
         logger.info("--- FINISHING ---")
