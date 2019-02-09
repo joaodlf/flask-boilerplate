@@ -1,8 +1,6 @@
 # flask-boilerplate
 
-A boilerplate project for Flask+CLI applications.
-
-More information [here](https://joaodlf.com/python-for-the-web-in-2019.html#python-for-the-web-in-2019) (original blog post [here](https://joaodlf.com/python-for-the-web.html)).
+A boilerplate project for Flask+CLI applications. More information [here](https://joaodlf.com/python-for-the-web-in-2019.html#python-for-the-web-in-2019) (original blog post [here](https://joaodlf.com/python-for-the-web.html)).
 
 You must create a `config.py` file in the `config` dir of the project (an example file is provided)
 
