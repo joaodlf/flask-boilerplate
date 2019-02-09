@@ -1,6 +1,8 @@
 # flask-boilerplate
 
-A boilerplate project for Flask+CLI applications. More information [here](https://joaodlf.com/python-for-the-web.html).
+A boilerplate project for Flask+CLI applications.
+
+More information [here](https://joaodlf.com/python-for-the-web-in-2019.html#python-for-the-web-in-2019) (original blog post [here](https://joaodlf.com/python-for-the-web.html)).
 
 You must create a `config.py` file in the `config` dir of the project (an example file is provided)
 
@@ -77,5 +79,7 @@ You should now be ready to run `flyway baseline` and `flyway migrate`.
 Basic tests are supplied in the `tests` dir, which can be run via pytest:
 
 ```
-$ pytest -vs -p no:warnings
+$ pytest -vs
 ```
+
+**Note:** You will need to setup a test database in your `config/test_config.py` file.
