@@ -6,12 +6,13 @@ You must create a `config.py` file in the `config` dir of the project (an exampl
 
 ## Development
 
-This project was built on Python **3.6** (You should be fine with any Python 3.6.* version).
+The project is currently developed under Python **3.7**. I recommend [pyenv](https://github.com/pyenv/pyenv)
+to manage your Python environments. A `.python-version` file is supplied at the root of the project.
 
 You'll need a new virtualenv:
 
 ```
-$ python3 -m venv env
+$ python -m venv env
 $ . env/bin/activate
 ```
 
@@ -29,15 +30,13 @@ $ export PYTHONPATH=$(pwd)
 
 ### Web
 
-uwsgi is used in production *and* development. Running a local server is as easy as:
+I prefer to run uwsgi in development and production. Running a local server is as easy as:
 
 ```
-$ sudo uwsgi --ini web/uwsgi/development.ini
+$ uwsgi --ini web/uwsgi/development.ini --http :8080
 ```
 
-(tip: You can modify the default port via the **development.ini** file)
-
-You should now be able to navigate to http://127.0.0.1:80/
+You should now be able to navigate to http://127.0.0.1:8080/
 
 ### CLI
 

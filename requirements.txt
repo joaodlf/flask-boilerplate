@@ -6,7 +6,7 @@ Click==7.0
 docopt==0.6.2
 Flask==1.0.2
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2==2.10.1
 logzero==1.3.1
 MarkupSafe==1.1.0
 more-itertools==5.0.0
@@ -20,6 +20,6 @@ python-dateutil==2.6.1
 pytzdata==2018.7
 sentry-sdk==0.6.9
 six==1.11.0
-urllib3==1.24.1
-uWSGI==2.0.15
+urllib3==1.25.2
+uWSGI==2.0.18
 Werkzeug==0.14.1
