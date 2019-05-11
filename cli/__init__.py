@@ -26,7 +26,9 @@ class Cli:
 
         # Set the logger.
         logzero.loglevel(logging.INFO)
-        logzero.logfile(f"{self.logs_dir}/{self.name}.log", maxBytes=1000000, backupCount=3)
+        logzero.logfile(
+            f"{self.logs_dir}/{self.name}.log", maxBytes=1000000, backupCount=3
+        )
 
         # Execute finish() at the end of CLI execution.
         atexit.register(self._finish)
@@ -46,7 +48,10 @@ class Cli:
                 error = f"Process #{cron_db_entry.pid} ({cron_db_entry.name}) is still running!"
 
                 if SENTRY_DSN:
-                    capture_message(f"Process #{cron_db_entry.pid} ({cron_db_entry.name}) is still running!", level="error")
+                    capture_message(
+                        f"Process #{cron_db_entry.pid} ({cron_db_entry.name}) is still running!",
+                        level="error",
+                    )
                 else:
                     logger.error(error)
 

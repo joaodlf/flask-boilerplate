@@ -18,7 +18,11 @@ class ApiIpWhitelist(ModelBase):
         """ Validates a single IP (i.e. is it in the database?). """
         # Check ip.
         try:
-            valid = ApiIpWhitelist.select().where(ApiIpWhitelist.ip_address == ip_address).get()
+            valid = (
+                ApiIpWhitelist.select()
+                .where(ApiIpWhitelist.ip_address == ip_address)
+                .get()
+            )
         except ApiIpWhitelist.DoesNotExist:
             valid = False
 
@@ -26,7 +30,8 @@ class ApiIpWhitelist(ModelBase):
         if not valid:
             try:
                 valid = ApiIpWhitelist.raw(
-                    "SELECT * FROM api_ip_whitelist WHERE ip_address >> %s::inet;", ip_address
+                    "SELECT * FROM api_ip_whitelist WHERE ip_address >> %s::inet;",
+                    ip_address,
                 ).execute()
             except peewee.DataError:
                 valid = False

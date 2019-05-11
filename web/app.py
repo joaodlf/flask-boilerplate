@@ -41,10 +41,7 @@ def register_error_handlers(app):
         import sentry_sdk
         from sentry_sdk.integrations.flask import FlaskIntegration
 
-        sentry_sdk.init(
-            dsn=config.SENTRY_DSN,
-            integrations=[FlaskIntegration()]
-        )
+        sentry_sdk.init(dsn=config.SENTRY_DSN, integrations=[FlaskIntegration()])
 
     # HTTP error templates.
     def render_error(error):

@@ -20,6 +20,7 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     """ Unit Testing. """
+
     DEBUG = True
     TESTING = True
 
@@ -28,6 +29,5 @@ flask_config = {
     "development": DevelopmentConfig,
     "testing": TestingConfig,
     "production": ProductionConfig,
-
-    "default": DevelopmentConfig
+    "default": DevelopmentConfig,
 }
